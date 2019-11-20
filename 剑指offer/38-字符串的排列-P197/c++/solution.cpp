@@ -3,43 +3,39 @@ using namespace std;
 
 class Solution {
 public:
-    bool VerifySquenceOfBST(vector<int> sequence) {
+    vector<string> Permutation(string str) {
 
-        return VeryBST(sequence, 0, sequence.size());
+        if (str.length() == 0) return rst;
+        Permutation(str, 0);
+        sort(rst.begin(), rst.end());
+        return rst;
     }
 
 private:
-    bool VeryBST(vector<int> sequence, int begin, int end){
-
-        if (sequence.empty() || begin > end-1)
-            return false;
-        int root = sequence[end-1];
-//        二叉搜索树中，左子树节点的值小于根节点的值
-        int i = begin;
-        for (; i < end - 1; ++i) {
-            if (sequence[i] > root) break;
+    vector<string> rst;
+    void Permutation(string str, int begin){
+        if (begin == str.length()){
+            rst.emplace_back(str);
+            return;
+        } else {
+            for (int i = begin; str[i] != '\0'; ++i) {
+                if(i!=begin&&str[begin]==str[i])
+                    continue;
+                swap(str[i], str[begin]);
+                Permutation(str, begin+1);
+                swap(str[i], str[begin]);
+            }
         }
-//        二叉搜索树中，右子树节点的值大于根节点的值
-        int j = i;
-        for (; j < end - 1; ++j) {
-            if (sequence[j] < root) return false;
-        }
-//        判断左子树是不是二叉搜索树
-        bool left = true;
-        if (i > begin)  left = VeryBST(sequence, begin, i);
-//        判断右子树是不是二叉搜索树
-        bool right = true;
-        if(i < end - 1)  right = VeryBST(sequence, i, end-1);
-
-        return (left && right);
     }
 };
 
 int main(int argc, char* argv[])
 {
-    vector<int> post = {5, 7, 6, 9, 11, 10, 8};
-
-    cout<<Solution().VerifySquenceOfBST(post);
-
+    string s = "abc";
+    vector<string> rst = Solution().Permutation(s);
+    for (int i = 0; i < rst.size(); i++){
+        cout<<rst[i]<<" ";
+    }
+    cout<<endl;
     return 0;
 }

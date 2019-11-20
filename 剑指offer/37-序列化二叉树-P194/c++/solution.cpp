@@ -54,37 +54,114 @@ void postOrder(TreeNode* root){
     cout<<root->val<<" ";
 }
 
-vector<string> res;
-vector<string> Serilize(TreeNode* tree){
+//vector<string> res;
+//vector<string> Serilize(TreeNode* tree){
+//
+//    if (tree == nullptr){
+//        res.emplace_back("#");
+//        return res;
+//    }
+//
+//    res.emplace_back(to_string(tree->val));
+//    Serilize(tree->left);
+//    Serilize(tree->right);
+//
+//    return res;
+//}
 
-    if (tree == nullptr){
-        res.emplace_back("$");
-        return res;
+//void printVec(vector<string> v){
+//    for (int i = 0; i < v.size(); ++i) {
+//        cout<<v[i]<<"";
+//    }
+//    cout<<endl;
+//}
+
+//TODO:还未想出来解决方案
+//TreeNode* Deserialize(vector<string> s){
+//    if (s.size() == 0 || s[0] == "$")   return nullptr;
+//    TreeNode* root = new TreeNode(stoi(s[0]));
+//    s.pop_back();
+//    root->left = Deserialize(s);
+//    root->right = Deserialize(s);
+//    return root;
+//}
+
+// leetcode-449
+
+// Encodes a tree to a single string.
+string Serialize(TreeNode* root) {
+    string res;
+    if(!root) return res;
+    queue<TreeNode*> q;
+    q.push(root);
+    while(!q.empty()){
+        TreeNode* node = q.front();
+        q.pop();
+        if(!node){
+            res += "$,";
+        }else{
+            res += to_string(node->val) + ",";
+            q.push(node->left);
+            q.push(node->right);
+        }
     }
-
-    res.emplace_back(to_string(tree->val));
-    Serilize(tree->left);
-    Serilize(tree->right);
     return res;
 }
 
-void printVec(vector<string> v){
-    for (int i = 0; i < v.size(); ++i) {
-        cout<<v[i]<<",";
+// Decodes your encoded data to tree.
+TreeNode* Deserialize(string data) {
+    if(data.empty()){return NULL;}
+    string node;
+    int i = 0;
+    while(i < data.size()){
+        if(data[i] == ','){
+            break;
+        }
+        node += data[i];
+        ++i;
     }
-    cout<<endl;
-}
 
-//TODO:还未想出来解决方案
-TreeNode* Deserialize(vector<string> s){
-    if (s.size() == 0 || s[0] == "$")   return nullptr;
-    TreeNode* root = new TreeNode(stoi(s[0]));
-    s.pop_back();
-    root->left = Deserialize(s);
-    root->right = Deserialize(s);
-    return root;
+    TreeNode* res = new TreeNode(stoi(node));
+    node = "";
+    queue<TreeNode*> q;
+    q.push(res);
+    ++i;
+    while(!q.empty()){
+        TreeNode* curNode = q.front();
+        q.pop();
+        while(i<data.size()){
+            if(data[i] == ','){
+                if(node != "$"){
+                    curNode->left = new TreeNode(stoi(node));
+                }
+                node = "";
+                ++i;
+                break;
+            }
+            node += data[i];
+            ++i;
+        }
+        while(i<data.size()){
+            if(data[i] == ','){
+                if(node != "$"){
+                    curNode->right = new TreeNode(stoi(node));
+                }
+                node = "";
+                ++i;
+                break;
+            }
+            node += data[i];
+            ++i;
+        }
+        if(curNode->left){
+            q.push(curNode->left);
+        }
+        if(curNode->right){
+            q.push(curNode->right);
+        }
+    }
+    return res;
 }
-
 int main(int argc, char* argv[])
 {
     vector<int> pre = {1, 2, 4, 3, 5, 6}, vin = {4, 2, 1, 5, 3, 6};
@@ -92,10 +169,8 @@ int main(int argc, char* argv[])
     TreeNode* tree = reConstructBinaryTree(pre, vin);
     postOrder(tree);
     cout<<endl;
-
-    vector<string> rst;
-    rst = Serilize(tree);
-    printVec(rst);
+    string rst = Serialize(tree);
+    cout<<rst<<endl;
 
     TreeNode* retree = Deserialize(rst);
     postOrder(retree);
