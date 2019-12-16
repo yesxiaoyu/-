@@ -37,10 +37,10 @@ void bubbleSortUp(vector<int>& arr){
     }while(swapped);
 }
 
-void printVector(vector<int> arr){
+void printVector(vector<int>& arr){
 
-    for (int i = 0; i < arr.size(); ++i) {
-        cout<<arr[i]<<" ";
+    for (int i : arr) {
+        cout<<i<<" ";
     }
     cout<<endl;
 }
