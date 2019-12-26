@@ -59,7 +59,7 @@ public:
         for (int i = 0; i < nums.size(); ++i) {
             if (times == 0){
                 res = nums[i];
-                times = 1;
+                times = 0;// 1->0
             } else if (nums[i] == res)  times++;
             else    times--;
         }
