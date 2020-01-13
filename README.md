@@ -97,15 +97,15 @@ leetcode~
 * 更多算法
 > [点分治与动态点分治](https://www.cnblogs.com/bztMinamoto/p/9489473.html)
 [点分树](https://blog.csdn.net/myjs999/article/details/80151929)
-> 
+> Tarjan算法是由Robert Tarjan(罗伯特·塔扬,不知有几位大神读对过这个名字) 发明的求有向图中强连通分量的算法。 预备知识:有向图,强连通。 
 
 ---
 
 # 参考资料
 
-* 1.《剑指offer》
-* 2.慕课网-刘宇波老师相关课程
-* 3.leetcode官网
-* 4.牛客网
+1. 《剑指offer》
+2. 慕课网-刘宇波老师相关课程
+3. leetcode官网
+4. 牛客网
 
 
