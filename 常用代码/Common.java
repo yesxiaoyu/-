@@ -20,3 +20,28 @@ private void swap(int[] nums, int i, int j){
         nums[i] = nums[j];
         nums[j] = t;
     }
+	
+// 3、迭代器
+List<String> list = new ArrayList<>();
+Iterator<String> it = list. iterator();
+while(it. hasNext()){
+  String obj = it. next();
+  System. out. println(obj);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
